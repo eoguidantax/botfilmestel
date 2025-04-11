@@ -5,30 +5,26 @@ def cadastrar_filme():
     cursor = conn.cursor()
 
     try:
-        print("\n📥 Cadastro de Filme/Série")
+        print("\n📥 Cadastro de Filme ou Série")
         print("-" * 30)
 
-        titulo = input("🎬 Título do Filme/Série: ").strip()
-        sinopse = input("📚 Sinopse (pode ser link do Telegraph): ").strip()
-        trailer = input("▶️ Link do Trailer (YouTube ou deixe vazio): ").strip()
+        nome = input("🎬 Nome do Filme/Série: ").strip()
+        sinopse = input("📚 Sinopse (link do Telegraph ou deixe em branco): ").strip()
+        trailer = input("▶️ Link do Trailer (YouTube ou deixe em branco): ").strip()
         link = input("🎥 Link para Assistir (Telegram): ").strip()
-        tipo = input("📺 Tipo (movie ou tv): ").strip().lower()
+        tipo = input("📺 Tipo (filme ou série): ").strip().lower()
 
-        if not titulo or not link or tipo not in ['movie', 'tv']:
-            print("❌ Dados inválidos. Verifique o título, link e tipo.")
+        if not nome or not link or tipo not in ['filme', 'série']:
+            print("❌ Dados inválidos. Verifique o nome, link e tipo (filme/série).")
             return
 
-        temporadas = ""
-        if tipo == "tv":
-            temporadas = input("📅 Temporadas disponíveis (ex: 1ª Temp, 2ª Temp, 3ª Temp): ").strip()
-
         cursor.execute('''
-            INSERT INTO filmes_series (titulo, sinopse, trailer, link, tipo, temporadas)
-            VALUES (?, ?, ?, ?, ?, ?)
-        ''', (titulo, sinopse, trailer, link, tipo, temporadas))
+            INSERT INTO filmes_series (nome, sinopse, trailer, link, tipo)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (nome, sinopse, trailer, link, tipo))
 
         conn.commit()
-        print("✅ Cadastro realizado com sucesso!")
+        print(f"✅ '{nome}' cadastrado com sucesso!")
 
     except Exception as e:
         print(f"❌ Erro ao cadastrar: {e}")

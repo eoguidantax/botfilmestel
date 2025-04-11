@@ -8,11 +8,11 @@ cursor = conn.cursor()
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS filmes_series (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        titulo TEXT NOT NULL,
+        nome TEXT NOT NULL,
         sinopse TEXT,
         trailer TEXT,
         link TEXT NOT NULL,
-        tipo TEXT DEFAULT "movie" CHECK(tipo IN ("movie", "tv")),
+        tipo TEXT DEFAULT "movie" CHECK(tipo IN ("movie", "tv", "filme", "série")),
         temporadas TEXT
     )
 ''')
